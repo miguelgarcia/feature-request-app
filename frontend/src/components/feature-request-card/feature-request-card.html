@@ -1,0 +1,20 @@
+<div class="shadow card border-secondary mb-2" style="max-width: 20rem;">
+    <div class="card-body">
+        <a data-bind="attr: { href: '#feature-request/' + featureRequest.id }">
+            <h5 class="card-title" data-bind="text: featureRequest.title"></h5>
+        </a>
+        <!--
+
+            <div class="mb-1" data-bind="text: featureRequest.shortDescription"></div>
+        -->
+        <div class="badge badge-secondary" data-bind="text: featureRequest.area"></div><br/>
+        <div class="badge badge-secondary" data-bind="text: 'Priority: '+featureRequest.priority"></div>
+        <div class="badge badge-secondary" data-bind="text: 'Target:' + featureRequest.targetDate"></div>
+    </div>
+    <div class="clearfix text-secondary font-italic mx-1 mb-1">
+        <small class="mr-1 text-nowrap float-left" data-bind="text: 'F.R. # '+featureRequest.id"></span>
+        </small>
+        <small class="text-nowrap float-right" data-bind="text: featureRequest.lastUpdate">
+        </small>
+    </div>
+</div>

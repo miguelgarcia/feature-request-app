@@ -1,0 +1,9 @@
+<div class="m-2">
+    <h3>Feature Requests for <span data-bind="text: client().name"></span>:</h3>
+    <div class="row mt-4" data-bind="foreach: featureRequests()">
+        <div class="col-sm-6 col-md-4 col-xl-3" draggable="true" data-bind="event: { dragstart: $component.onDragStart, drop: $component.onDrop, dragover: $component.onDragEnter, dragend: $component.onDragEnd}">
+            <feature-request-card params="featureRequest: $data">
+            </feature-request-card>
+        </div>
+    </div>
+</div>

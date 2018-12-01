@@ -34,7 +34,11 @@ class Router {
 var routerInstance = new Router({
     routes: [
         { url: '', params: { page: 'home-page' } },
-        { url: 'about', params: { page: 'about-page' } }
+        { url: 'about', params: { page: 'about-page' } },
+        // Todo:
+        { url: 'client-board/{clientId}', params: { page: 'client-board' } },
+        { url: 'client-archive/{clientId}', params: { page: 'client-archive' } },
+        { url: 'search', params: { page: 'search' } }
     ]
 });
 

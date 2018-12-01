@@ -6,7 +6,14 @@
     <title>Feature Request App</title>
   </head>
   <body>
-    <nav-bar params="route: route"></nav-bar>
-    <div id="page" data-bind="component: { name: route().page, params: route }"></div>
+    <nav-bar params="route: route, appState: appState"></nav-bar>
+    <div id="page" data-bind="component: { 
+        name: route().page,
+        params: {
+          route:route,
+          appState:appState 
+        }
+      }">
+    </div>
   </body>
 </html>
