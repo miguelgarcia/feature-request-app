@@ -1,0 +1,7 @@
+.card-being-dragged {
+    opacity: 0.75;
+}
+
+.card-drop-area {
+    background-color: dimgray;
+}
