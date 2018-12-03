@@ -24,12 +24,12 @@ for (let i = 0; i < mockedClients.length; i++) {
     for (let j = 0; j < 20; j++) {
         mockedClients[i].featureRequests.push({
             id: i * 20 + j,
-            title: "Implement better filters",
+            title: "Implement better filters #" + j,
             shortDescription: "Some quick example text to build on the card title and make up the bulk of the card's content",
             area: mockedAreas[j % mockedAreas.length],
             lastUpdate: "24/12/2018 12:38hs",
             targetDate: "24/12/2018",
-            priority: j
+            priority: j + 1
         });
     }
 }
@@ -39,6 +39,9 @@ class AppState {
         this.client = ko.observable();
         this.featureRequest = ko.observable();
         this.featureRequests = ko.observableArray().extend({ deferred: true });
+        this.clients = ko.observableArray(mockedClients.map(c => {
+            return { id: c.id, name: c.name, }
+        }));
     }
 
     setCurrentClient(clientId) {
@@ -52,13 +55,21 @@ class AppState {
     }
 
     changePriority(featureRequest, newPriority) {
-        //this.featureRequests()[0].title = "banana";
-        //this.featureRequests.valueWillMutate();
-        featureRequest.priority = newPriority;
-        this.featureRequests()[featureRequest.id] = Object.assign({}, featureRequest)
-        this.featureRequests.valueHasMutated();
-
-        console.log(featureRequest, newPriority);
+        let oldPriority = featureRequest.priority;
+        if (oldPriority == newPriority) {
+            return;
+        }
+        if (oldPriority < newPriority) {
+            for (let i = oldPriority + 1; i <= newPriority; i++) {
+                this.featureRequests()[i - 1] = Object.assign({}, this.featureRequests()[i - 1], { priority: i - 1 });
+            }
+        } else {
+            for (let i = newPriority; i < oldPriority; i++) {
+                this.featureRequests()[i - 1] = Object.assign({}, this.featureRequests()[i - 1], { priority: i + 1 });
+            }
+        }
+        this.featureRequests()[oldPriority - 1] = Object.assign({}, featureRequest, { priority: newPriority });
+        this.featureRequests.sort((a, b) => a.priority - b.priority);
     }
 
     setFeatureRequest(featureRequestId) {

@@ -1,12 +1,9 @@
-<div class="shadow card border-secondary mb-2" style="max-width: 20rem;">
+<div class="shadow card border-secondary mb-2" style="max-width: 20rem;" data-bind="css:{'card-being-dragged':isDragged, 'card-drop-area':isDropArea}">
     <div class="card-body">
         <a data-bind="attr: { href: '#feature-request/' + featureRequest.id }">
             <h5 class="card-title" data-bind="text: featureRequest.title"></h5>
         </a>
-        <!--
-
-            <div class="mb-1" data-bind="text: featureRequest.shortDescription"></div>
-        -->
+        <div class="mb-1" data-bind="text: featureRequest.shortDescription"></div>
         <div class="badge badge-secondary" data-bind="text: featureRequest.area"></div><br/>
         <div class="badge badge-secondary" data-bind="text: 'Priority: '+featureRequest.priority"></div>
         <div class="badge badge-secondary" data-bind="text: 'Target:' + featureRequest.targetDate"></div>

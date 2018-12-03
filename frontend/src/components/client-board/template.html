@@ -1,8 +1,17 @@
 <div class="m-2">
-    <h3>Feature Requests for <span data-bind="text: client().name"></span>:</h3>
+    <h3>Feature Requests for "<span data-bind="text: client().name"></span>":</h3>
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        You can reorder the feature requests priorities using <strong>Drag & Drop</strong> or <strong>Editing</strong>.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <p></p>
     <div class="row mt-4" data-bind="foreach: featureRequests()">
-        <div class="col-sm-6 col-md-4 col-xl-3" draggable="true" data-bind="event: { dragstart: $component.onDragStart, drop: $component.onDrop, dragover: $component.onDragEnter, dragend: $component.onDragEnd}">
-            <feature-request-card params="featureRequest: $data">
+        <div class="col-xl-3" draggable="true" data-bind="event: { dragstart: $component.onDragStart, drop: $component.onDrop, dragover: $component.onDragEnter, dragend: $component.onDragEnd}">
+            <feature-request-card params="featureRequest: $data, isDragged: $data.id==$component.beingDraggedCard().id, isDropArea: $data.id==$component.dropArea().id">
             </feature-request-card>
         </div>
     </div>

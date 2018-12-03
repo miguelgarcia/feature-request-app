@@ -2,17 +2,21 @@ import ko from 'knockout';
 import template from './template.html';
 
 class ClientSelectViewModel {
-    constructor(route) {
+    constructor(params) {
+        this.appState = params.appState;
+        this.onChangeCallback = params.onChange;
         this.selectedClient = ko.observable();
-        this.clients = ko.observableArray([
-            { name: 'Bert', id: 1 },
-            { name: 'Charles', id: 2 },
-            { name: 'Denise', id: 3 }
-        ]);
+        this.selectedClient.subscribe(this.handleChange, this);
+        this.clients = this.appState.clients;
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    doSomething() {
-        //this.message('You invoked doSomething() on the viewmodel.');
+    handleChange() {
+        if (this.selectedClient()) {
+            if (this.onChangeCallback) {
+                this.onChangeCallback(this.selectedClient());
+            }
+        }
     }
 }
 export default { viewModel: ClientSelectViewModel, template: template };

@@ -9,6 +9,9 @@ import featureRequestCardComponent from '../components/feature-request-card';
 import AppState from './appstate';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap';
+import './app.css';
+
 
 // Register components
 ko.components.register('nav-bar', navBarComponent);

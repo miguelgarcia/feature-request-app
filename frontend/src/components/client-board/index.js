@@ -14,9 +14,8 @@ class ClientBoardViewModel {
         this.appState = appState;
         this.client = params.appState.client;
         this.featureRequests = params.appState.featureRequests;
-        this.beingDragged = ko.observable();
-        this.beingDraggedCard = undefined;
-        this.dropArea = ko.observable();
+        this.beingDraggedCard = ko.observable({});
+        this.dropArea = ko.observable({});
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragEnter = this.onDragEnter.bind(this);
         this.onDragEnd = this.onDragEnd.bind(this);
@@ -24,13 +23,12 @@ class ClientBoardViewModel {
     }
 
     onDragStart(card) {
-        this.beingDraggedCard = card;
-        this.beingDragged(card.id);
+        this.beingDraggedCard(card);
         return true;
     }
 
     onDrop(card) {
-        this.appState.changePriority(this.beingDraggedCard, this.dropArea().priority);
+        this.appState.changePriority(this.beingDraggedCard(), this.dropArea().priority);
         return true;
     }
 
@@ -40,8 +38,8 @@ class ClientBoardViewModel {
     }
 
     onDragEnd(card, evt) {
-        this.beingDragged(undefined);
-        this.dropArea(undefined);
+        this.beingDraggedCard({});
+        this.dropArea({});
     }
 }
 export default { viewModel: ClientBoardViewModel, template: template };
