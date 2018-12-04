@@ -1,0 +1,22 @@
+<table class="table table-striped table-bordered table-sm table-responsive-sm">
+    <tbody data-bind="foreach: rows">
+        <tr>
+            <td>
+                <div data-bind="component: { 
+                        name: $component.rowComponent,
+                        params: {
+                          item: $data,
+                        }
+                      }">
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<nav aria-label="grid-page">
+    <ul class="pagination pagination-sm justify-content-center" data-bind="foreach: pagesList">
+        <li class="page-item" data-bind="click: $component.setPage, css: {active: $component.currentPage() == page}">
+            <a class="page-link" href="#" data-bind="text: page"></a>
+        </li>
+    </ul>
+</nav>

@@ -1,7 +1,9 @@
-.card-being-dragged {
-    opacity: 0.75;
+.grid-link {
+    text-decoration: none;
+    color: black;
 }
 
-.card-drop-area {
-    background-color: dimgray;
+.grid-link:hover {
+    text-decoration: none;
+    color: #007bff;
 }

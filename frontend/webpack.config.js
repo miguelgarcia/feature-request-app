@@ -3,10 +3,20 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: './src/app/index.js',
+    entry: [
+        "core-js/modules/es6.promise",
+        "core-js/modules/es6.array.iterator",
+        "./src/app/index.js"
+    ],
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        chunkFilename: '[name].bundle.js',
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
     },
     module: {
         rules: [{

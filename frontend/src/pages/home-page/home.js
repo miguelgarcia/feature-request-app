@@ -2,6 +2,7 @@ import ko from 'knockout';
 import homeTemplate from './home.html';
 import jq from 'jquery'
 import hasher from 'hasher';
+import '../../components/client-select';
 
 class HomeViewModel {
     constructor(params) {
@@ -10,8 +11,9 @@ class HomeViewModel {
     }
 
     onClientSelect(client) {
-        jq('#selectClientModal').modal('hide')
-        hasher.setHash("client-board/" + client.id, "", "ch/au")
+        jq('#selectClientModal').modal('hide');
+        hasher.setHash("client-board/" + client.id);
     }
 }
+
 export default { viewModel: HomeViewModel, template: homeTemplate };

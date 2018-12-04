@@ -7,7 +7,9 @@ class ClientSelectViewModel {
         this.onChangeCallback = params.onChange;
         this.selectedClient = ko.observable();
         this.selectedClient.subscribe(this.handleChange, this);
-        this.clients = this.appState.clients;
+        this.clients = ko.observableArray()
+        let model = params.appState.model;
+        model.listClients().then(clients => this.clients(clients));
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -19,4 +21,7 @@ class ClientSelectViewModel {
         }
     }
 }
+
+ko.components.register('client-select', { viewModel: ClientSelectViewModel, template: template });
+
 export default { viewModel: ClientSelectViewModel, template: template };

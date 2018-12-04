@@ -13,11 +13,13 @@ import hasher from 'hasher';
 
 class Router {
     constructor(config) {
+        this.currentPage = ko.observable({});
         this.currentRoute = ko.observable({});
 
         // Configure Crossroads route handlers
         ko.utils.arrayForEach(config.routes, (route) => {
             crossroads.addRoute(route.url, (requestParams) => {
+                this.currentPage(route.params.page);
                 this.currentRoute(ko.utils.extend(requestParams, route.params));
             });
         });
@@ -37,6 +39,7 @@ var routerInstance = new Router({
         { url: 'about', params: { page: 'about-page' } },
         // Todo:
         { url: 'client-board/{clientId}', params: { page: 'client-board' } },
+        { url: 'client-board/{clientId}?p={p}', params: { page: 'client-board' } },
         { url: 'client-archive/{clientId}', params: { page: 'client-archive' } },
         { url: 'search', params: { page: 'search' } }
     ]
