@@ -13,13 +13,19 @@ class ClientBoardViewModel {
         this.featureRequests = ko.observableArray();
 
         this.model = params.appState.model;
-        this.model.getClient(clientId).then(client => this.client(client));
-        this.model.getFeatureRequests(clientId).then(frs => {
-            this.featureRequests(frs)
-        });
-        this.currentPage.subscribe(function(v) {
-            hasher.setHash('client-board/' + clientId + '?p=' + v);
-        });
+        this.model.getClient(clientId).then(this.client);
+        this.model.getFeatureRequests(clientId).then(this.featureRequests);
+        this.onPageChange = this.onPageChange.bind(this);
+        this.onCreate = this.onCreate.bind(this);
+        this.currentPage.subscribe(this.onPageChange);
+    }
+
+    onPageChange(page) {
+        hasher.setHash('client-board/' + this.client().id + '?p=' + page);
+    }
+
+    onCreate() {
+        hasher.setHash('feature-request-new/' + this.client().id);
     }
 }
 export default { viewModel: ClientBoardViewModel, template: template };

@@ -1,0 +1,18 @@
+<form class="needs-validation">
+    <div class="form-group">
+        <text-input params="dirty: formDirty, required: true, placeholder: 'Feature request title', value: title, label:'Title', controlId:'txtTitle', error: titleError()"></text-input>
+    </div>
+    <div class="form-group">
+        <textarea-input params="dirty: formDirty, required: true, value: description, label:'Description', controlId:'txtDescription', error: descriptionError(), rows:10"></textarea-input>
+    </div>
+    <div class="form-group">
+        <select-input params="dirty: formDirty, value: area, label:'Area', optionsText:'name', optionsCaption:'Choose...', controlId:'selArea', error: areaError, options:areas"></select-input>
+    </div>
+    <div class="form-group">
+        <date-input params="dirty: formDirty, value: targetDate, label:'Target date', controlId:'dateTargetDate', error: targetDateError"></date-input>
+    </div>
+    <div class="form-group">
+        <range-input params="value: priority, label:'Priority', controlId:'rangePriority', max: maxPriority()"></range-input>
+    </div>
+    <button data-bind="click: handleSubmit" class="btn btn-success btn-lg">Create</button>
+</form>

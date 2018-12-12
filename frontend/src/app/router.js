@@ -13,11 +13,12 @@ import hasher from 'hasher';
 
 class Router {
     constructor(config) {
+        this.routes = config.routes;
         this.currentPage = ko.observable({});
         this.currentRoute = ko.observable({});
 
         // Configure Crossroads route handlers
-        ko.utils.arrayForEach(config.routes, (route) => {
+        ko.utils.arrayForEach(this.routes, (route) => {
             crossroads.addRoute(route.url, (requestParams) => {
                 this.currentPage(route.params.page);
                 this.currentRoute(ko.utils.extend(requestParams, route.params));
@@ -30,6 +31,22 @@ class Router {
         hasher.changed.add(hash => crossroads.parse(hash));
         hasher.init();
     }
+
+    goTo(newPath) {
+        hasher.setHash(newPath);
+    }
+
+    goRoute(routeName, params) {
+        let route = this.routes.find(r => r.name == routeName);
+        if (!route) {
+            hasher.setHash("404");
+        }
+        let url = route.url;
+        for (let p in params) {
+            url = url.replace(`{${p}}`, params[p]);
+        }
+        hasher.setHash(url);
+    }
 }
 
 // Create and export router instance
@@ -37,8 +54,8 @@ var routerInstance = new Router({
     routes: [
         { url: '', params: { page: 'home-page' } },
         { url: 'about', params: { page: 'about-page' } },
-        // Todo:
-        { url: 'client-board/{clientId}', params: { page: 'client-board' } },
+        { url: 'feature-request-new/{clientId}', params: { page: 'feature-request-new' } },
+        { url: 'client-board/{clientId}', params: { page: 'client-board' }, name: 'client-board' },
         { url: 'client-board/{clientId}?p={p}', params: { page: 'client-board' } },
         { url: 'client-archive/{clientId}', params: { page: 'client-archive' } },
         { url: 'search', params: { page: 'search' } }

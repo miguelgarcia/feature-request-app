@@ -8,11 +8,12 @@
 </head>
 
 <body>
-    <nav-bar params="route: route, appState: appState"></nav-bar>
+    <nav-bar params="route: route, router: router, appState: appState"></nav-bar>
     <div id="page" data-bind="component: { 
         name: currentPage(),
         params: {
           route:route,
+          router: router,
           appState:appState 
         }
       }">

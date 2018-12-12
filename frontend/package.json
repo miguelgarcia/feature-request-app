@@ -14,6 +14,7 @@
         "@babel/core": "^7.1.6",
         "@babel/plugin-syntax-dynamic-import": "^7.2.0",
         "@babel/preset-env": "^7.1.6",
+        "@fortawesome/fontawesome-free": "^5.5.0",
         "babel-loader": "^8.0.4",
         "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
         "css-loader": "^1.0.1",

@@ -1,0 +1,6 @@
+<label data-bind="text: label, attr: {for: controlId}"></label>
+<select class="form-control" id="areaInput" data-bind="attr: {id:controlId}, options: options,
+optionsText: optionsText,
+value: value,
+optionsCaption: optionsCaption,  css: {'is-invalid': dirty() && !valid(), 'is-valid': dirty() && valid()}"></select>
+<div class="invalid-feedback" data-bind="visible: dirty(), text: error"></div>

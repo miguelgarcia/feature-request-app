@@ -1,0 +1,3 @@
+<label data-bind="text: label, attr: {for: controlId}"></label>
+<input type="date" data-bind="value: value, attr: {id: controlId }, css: {'is-invalid': dirty() && !valid(), 'is-valid': dirty() && valid() }" class="form-control" />
+<div class="invalid-feedback" data-bind="visible: dirty(), text: error"></div>

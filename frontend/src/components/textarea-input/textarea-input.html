@@ -1,0 +1,4 @@
+<span data-bind="if: required" class="text-danger">*</span>
+<label data-bind="text: label, attr: {for: controlId}"></label>
+<textarea class="form-control" data-bind="value: value, attr: {id: controlId, placeholder: placeholder, rows: rows}, css: {'is-invalid': dirty() && !valid(), 'is-valid': dirty() && valid() }"></textarea>
+<div class="invalid-feedback" data-bind="text: error"></div>

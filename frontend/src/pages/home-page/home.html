@@ -1,29 +1,31 @@
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h2 class="display-4">Feature Request App</h2>
-        <p class="lead mt-4">
-            Go to <button class="btn btn-primary" data-toggle="modal" data-target="#selectClientModal">Client's Feature Requests Board</button> to create, update and organize one client's feature requests.
-        </p>
-        <p class="lead">
-            Go to <a class="btn btn-primary" href="#search">Search</a> to navigate through all the feature requests.
-        </p>
+<div class="page">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h2 class="display-4">Feature Request App</h2>
+            <p class="lead mt-4">
+                Go to <button class="btn btn-primary" data-toggle="modal" data-target="#selectClientModal">Client's Feature Requests Board</button> to create, update and organize one client's feature requests.
+            </p>
+            <p class="lead">
+                Go to <a class="btn btn-primary" href="#search">Search</a> to navigate through all the feature requests.
+            </p>
+        </div>
     </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="selectClientModal" tabindex="-1" role="dialog" aria-labelledby="selectClientModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="selectClientModalLabel">Select a client</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <!-- Modal -->
+    <div class="modal fade" id="selectClientModal" tabindex="-1" role="dialog" aria-labelledby="selectClientModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selectClientModalLabel">Select a client</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
-            </div>
-            <div class="modal-body">
-                <client-select params="appState: appState, onChange: onClientSelect"></client-select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </button>
+                </div>
+                <div class="modal-body">
+                    <client-select params="appState: appState, onChange: onClientSelect"></client-select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
