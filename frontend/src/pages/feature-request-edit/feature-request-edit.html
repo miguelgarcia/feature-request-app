@@ -1,0 +1,9 @@
+<div class="page" data-bind="if: featureRequest()">
+    <h4>Editing feature request #<span data-bind="text: featureRequest().id"></span></h4>
+    <div class="alert alert-info">Complete the form and save to update the feature request.</div>
+    <div class="card">
+        <div class="card-body">
+            <feature-request-form params="featureRequest: featureRequest(), appState: appState, onSubmit: handleSave"></feature-request-form>
+        </div>
+    </div>
+</div>
