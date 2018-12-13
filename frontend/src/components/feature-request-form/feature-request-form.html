@@ -14,5 +14,5 @@
     <div class="form-group">
         <range-input params="value: priority, label:'Priority', controlId:'rangePriority', max: maxPriority()"></range-input>
     </div>
-    <button data-bind="click: handleSubmit" class="btn btn-success btn-lg">Create</button>
+    <button data-bind="click: handleSubmit, text: featureRequest ? 'Save' : 'Create'" class="btn btn-success btn-lg"></button>
 </form>

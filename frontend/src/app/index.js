@@ -45,6 +45,10 @@ ko.components.register('feature-request-new', {
     pageLoader: () =>
         import ('../pages/feature-request-new')
 });
+ko.components.register('feature-request-edit', {
+    pageLoader: () =>
+        import ('../pages/feature-request-edit')
+});
 
 // ... or for template-only components, you can just point to a .html file directly:
 ko.components.register('about-page', {

@@ -6,7 +6,7 @@ class FeatureRequestNewViewModel {
     constructor(params) {
         let clientId = params.route().clientId;
         this.router = params.router;
-        this.client = ko.observable({});
+        this.client = ko.observable();
         this.appState = params.appState;
         this.model = params.appState.model;
         this.model.getClient(clientId).then(this.client);
