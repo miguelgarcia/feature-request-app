@@ -9,13 +9,13 @@ import '../date-input';
 
 class FeatureRequestFormViewModel {
     constructor(params) {
-        this.areas = params.areas;
-
+        this.featureRequest = false;
+        this.showArchive = params.showArchive;
+        this.onArchive = params.onArchive;
+        this.onUnarchive = params.onUnarchive;
+        this.showUnarchive = params.showUnarchive;
         if (params.featureRequest) {
             this.featureRequest = params.featureRequest();
-            this.client = this.featureRequest.client;
-        } else {
-            this.client = params.client();
         }
         this.onSubmit = params.onSubmit;
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,7 +51,7 @@ class FeatureRequestFormViewModel {
         }, this);
 
         this.priority = ko.observable(this.featureRequest ? this.featureRequest.priority : 1);
-        this.maxPriority = ko.pureComputed(() => this.client.activeFeatureRequests + (this.featureRequest ? 0 : 1), this)
+        this.maxPriority = params.maxPriority;
 
         this.formValid = ko.pureComputed(() => this.titleError() == "" && this.descriptionError() == "" && this.areaError() == "" && this.targetDateError() == "", this);
     }

@@ -121,7 +121,6 @@ class Manager {
 
     updateFeatureRequest(fr) {
         let idx = featureRequests.findIndex(e => e.id == fr.id);
-        console.log(fr)
         featureRequests[idx] = fr;
         return new Promise((resolve, reject) => {
             resolve();

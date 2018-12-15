@@ -9,8 +9,11 @@ class SelectInputViewModel {
         this.optionsCaption = params.optionsCaption;
         this.label = params.label;
         this.controlId = params.controlId;
-        this.error = params.error;
-        this.dirty = params.dirty;
+        this.error = params.error ? params.error : () => "";
+        this.dirty = params.dirty ? params.dirty : () => false;
+        this.required = params.required;
+        this.inline = params.inline;
+        this.small = params.small;
         this.valid = ko.pureComputed(() => {
             return this.error() == ''
         }, this);

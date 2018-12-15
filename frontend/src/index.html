@@ -9,6 +9,13 @@
 
 <body>
     <nav-bar params="route: route, router: router, appState: appState"></nav-bar>
+    <div data-bind="visible: flash, text: flash" class="alert alert-warning" style="width: 40%;
+        position: fixed;
+        left: 50%;
+        margin-left: -20%; 
+        top: 1px;
+        z-index: 999;
+        text-align: center"></div>
     <div id="page" data-bind="component: { 
         name: currentPage(),
         params: {

@@ -1,6 +1,12 @@
-<label data-bind="text: label, attr: {for: controlId}"></label>
-<select class="form-control" id="areaInput" data-bind="attr: {id:controlId}, options: options,
-optionsText: optionsText,
-value: value,
-optionsCaption: optionsCaption,  css: {'is-invalid': dirty() && !valid(), 'is-valid': dirty() && valid()}"></select>
-<div class="invalid-feedback" data-bind="visible: dirty(), text: error"></div>
+<div class="form-group" data-bind="css: {'form-inline': inline }">
+
+    <span data-bind="if: required" class="text-danger">*</span>
+    <span data-bind="if: label">
+        <label data-bind="text: label, attr: {for: controlId}, css: { 'mr-2': inline}"></label>
+    </span>
+    <select class="form-control" data-bind="attr: {id:controlId}, options: options,
+    optionsText: optionsText,
+    value: value,
+    optionsCaption: optionsCaption,  css: {'form-control-sm': small, 'is-invalid': dirty() && !valid(), 'is-valid': dirty() && valid()}"></select>
+    <div class="invalid-feedback" data-bind="visible: dirty(), text: error"></div>
+</div>

@@ -6,7 +6,7 @@
         <textarea-input params="dirty: formDirty, required: true, value: description, label:'Description', controlId:'txtDescription', error: descriptionError(), rows:10"></textarea-input>
     </div>
     <div class="form-group">
-        <select-input params="dirty: formDirty, value: area, label:'Area', optionsText:'name', optionsCaption:'Choose...', controlId:'selArea', error: areaError, options:areas"></select-input>
+        <select-input params="required: true, dirty: formDirty, value: area, label:'Area', optionsText:'name', optionsCaption:'Choose...', controlId:'selArea', error: areaError, options:areas"></select-input>
     </div>
     <div class="form-group">
         <date-input params="dirty: formDirty, value: targetDate, label:'Target date', controlId:'dateTargetDate', error: targetDateError"></date-input>
@@ -15,4 +15,6 @@
         <range-input params="value: priority, label:'Priority', controlId:'rangePriority', max: maxPriority()"></range-input>
     </div>
     <button data-bind="click: handleSubmit, text: featureRequest ? 'Save' : 'Create'" class="btn btn-success btn-lg"></button>
+    <button data-bind="click: onArchive, visible: showArchive" class="btn btn-secondary btn-lg">Archive</button>
+    <button data-bind="click: onUnarchive, visible: showUnarchive" class="btn btn-secondary btn-lg">Activate (move out of archive)</button>
 </form>

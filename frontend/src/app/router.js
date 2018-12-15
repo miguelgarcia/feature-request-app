@@ -42,9 +42,11 @@ class Router {
             hasher.setHash("404");
         }
         let url = route.url;
-        for (let p in params) {
-            url = url.replace(`{${p}}`, params[p]);
-        }
+        console.log(params);
+        url = url.replace(/{[^}]*}/g, (s) => s.substr(1, s.length - 2) in params ? params[s.substr(1, s.length - 2)] : "");
+        url = url.replace(/:[^:]*:/g, (s) => s.substr(1, s.length - 2) in params ? params[s.substr(1, s.length - 2)] : "");
+        url = url.replace(/\/\/+/g, "/");
+        console.log(url);
         hasher.setHash(url);
     }
 }
@@ -56,8 +58,7 @@ var routerInstance = new Router({
         { url: 'about', params: { page: 'about-page' } },
         { url: 'feature-request-new/{clientId}', params: { page: 'feature-request-new' } },
         { url: 'feature-request/{featureRequestId}', params: { page: 'feature-request-edit' } },
-        { url: 'client-board/{clientId}', params: { page: 'client-board' }, name: 'client-board' },
-        { url: 'client-board/{clientId}?p={p}', params: { page: 'client-board' } },
+        { url: 'client-board/{clientId}/:?query:', params: { page: 'client-board' }, name: 'client-board' },
         { url: 'client-archive/{clientId}', params: { page: 'client-archive' } },
         { url: 'search', params: { page: 'search' } }
     ]

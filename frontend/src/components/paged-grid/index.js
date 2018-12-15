@@ -7,6 +7,7 @@ class PagedGridViewModel {
         this.rowComponent = params.rowComponent;
         this.pages = params.pages;
         this.currentPage = params.currentPage;
+        this.onPageChange = params.onPageChange;
 
         this.pagesList = ko.pureComputed(() => {
             let pagesList = [];
@@ -21,6 +22,7 @@ class PagedGridViewModel {
 
     setPage(page) {
         this.currentPage(page.page);
+        this.onPageChange();
     }
 }
 

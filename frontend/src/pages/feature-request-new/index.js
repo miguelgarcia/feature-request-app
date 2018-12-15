@@ -11,6 +11,7 @@ class FeatureRequestNewViewModel {
         this.model = params.appState.model;
         this.model.getClient(clientId).then(this.client);
         this.handleSave = this.handleSave.bind(this);
+        this.maxPriority = ko.pureComputed(() => this.client().activeFeatureRequests + 1, this)
     }
 
     handleSave(data) {

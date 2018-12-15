@@ -3,7 +3,7 @@
     <div class="alert alert-info">Complete the form and save to update the feature request.</div>
     <div class="card">
         <div class="card-body">
-            <feature-request-form params="featureRequest: featureRequest(), appState: appState, onSubmit: handleSave"></feature-request-form>
+            <feature-request-form params="maxPriority: maxPriority, featureRequest: featureRequest(), appState: appState, onSubmit: handleSave, onArchive: handleArchive, onUnarchive: handleUnarchive, showArchive: showArchive(), showUnarchive: !showArchive()"></feature-request-form>
         </div>
     </div>
 </div>

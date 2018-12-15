@@ -8,8 +8,8 @@ class TextInputViewModel {
         this.label = params.label;
         this.required = params.required;
         this.controlId = params.controlId;
-        this.error = params.error;
-        this.dirty = params.dirty;
+        this.error = params.error ? params.error : () => "";
+        this.dirty = params.dirty ? params.dirty : () => false;
         this.valid = ko.pureComputed(() => {
             return this.error() == ''
         }, this);
