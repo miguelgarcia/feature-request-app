@@ -1,0 +1,13 @@
+version: '2'
+services:
+  dbtest:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: frapp
+      POSTGRES_USER: frapp
+      POSTGRES_DB: feature_requests_test
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata_test:/var/lib/postgresql/data/pgdata
