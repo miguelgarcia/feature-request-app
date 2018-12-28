@@ -2,11 +2,11 @@
     <a class="grid-link font-weight-bold h5" data-bind="attr: { href: '#feature-request/' + featureRequest.id }, text: featureRequest.title"></a><br/>
     <span class="badge badge-warning" title="Priority" data-bind="text: featureRequest.priority"></span>
     <span class="badge badge-info" title="Area" data-bind="text: featureRequest.area.name"></span>
-    <span class="badge badge-secondary" title="Target date" data-bind="text: featureRequest.targetDate"></span>
+    <span class="badge badge-secondary" title="Target date" data-bind="text: featureRequest.target_date"></span>
     <div class="clearfix text-secondary font-italic mx-1 mb-1">
         <small class="mr-1 text-nowrap float-left" data-bind="text: '# '+featureRequest.id"></span>
         </small>
-        <small class="text-nowrap float-left ml-4" data-bind="text: 'Last update: '+featureRequest.lastUpdate">
+        <small class="text-nowrap float-left ml-4" data-bind="text: 'Last update: '+featureRequest.last_update">
         </small>
     </div>
 </div>

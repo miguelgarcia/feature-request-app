@@ -60,5 +60,15 @@ module.exports = {
             filename: "[name].css",
             chunkFilename: "[id].css"
         })
-    ]
+    ],
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:5000',
+            },
+            '/auth/login': {
+                target: 'http://localhost:5000',
+            }
+        }
+    }
 };

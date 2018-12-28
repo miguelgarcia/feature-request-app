@@ -80,43 +80,34 @@ class Manager {
     }
 
     getClient(clientId) {
-        return new Promise((resolve, reject) => {
-            resolve(clients.find(c => c.id == clientId));
-        });
+        return $.ajax('/api/clients/' + clientId);
     }
 
     listClients() {
-        return new Promise((resolve, reject) => {
-            resolve(clients);
-        });
+        return $.ajax('/api/clients');
     }
 
     listAreas() {
-        return new Promise((resolve, reject) => {
-            resolve([
-                new Area({
-                    name: "Software",
-                    id: 1
-                }),
-                new Area({
-                    name: "Payments",
-                    id: 2
-                })
-            ]);
-        });
+        return $.ajax('/api/areas');
     }
 
     listFeatureRequests(filter) {
         return new Promise((resolve, reject) => {
-            resolve({ items: featureRequests, totalItems: 15 });
+            let url = '/api/feature_requests?client=' + filter.clientId;
+            if (filter.limit) {
+                url += "&limit=" + filter.limit;
+            }
+            if (filter.offset) {
+                url += "&offset=" + filter.offset;
+            }
+            $.ajax(url).then((data, status, jqXHR) => {
+                resolve({ items: data, totalItems: parseInt(jqXHR.getResponseHeader('x-total-results')) });
+            })
         });
     }
 
     getFeatureRequest(id) {
-        return new Promise((resolve, reject) => {
-            let fr = featureRequests.find(v => v.id == id);
-            resolve(fr);
-        });
+        return $.ajax('/api/feature_requests/' + id);
     }
 
     updateFeatureRequest(fr) {

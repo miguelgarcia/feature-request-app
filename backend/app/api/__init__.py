@@ -16,7 +16,7 @@ def clients():
     clients = Client.query.all()
     return ClientSummarySchema(many=True).jsonify(clients)
 
-@blueprint.route('/client/<int:id>')
+@blueprint.route('/clients/<int:id>')
 @login_required
 def client(id):
     client = Client.query.get(id)

@@ -63,14 +63,14 @@ class ClientBoardViewModel {
     }
 
     loadResults() {
-        console.log("called")
         hasher.setHash('client-board/' + this.client().id +
             '?s=' + this.searchCriteria.search +
             "&p=" + this.currentPage() +
             "&sort=" + (this.searchCriteria.sort ? this.searchCriteria.sort.id : this.sortOptions[0].id) +
             (this.searchCriteria.area ? "&area=" + this.searchCriteria.area.id : '') +
             (this.searchCriteria.archived ? "&archived=1" : ''));
-        this.model.listFeatureRequests({ clientId: this.client().id }, this.currentPage()).then(
+
+        this.model.listFeatureRequests({ clientId: this.client().id, limit: this.itemsPerPage, offset: this.itemsPerPage * (this.currentPage() - 1) }).then(
             (result) => {
                 this.featureRequests(result.items);
                 this.pages(Math.ceil(result.totalItems / this.itemsPerPage));
