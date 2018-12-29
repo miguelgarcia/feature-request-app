@@ -35,9 +35,9 @@ class ClientBoardViewModel {
         });
         // sorting
         this.sortOptions = [
-            { name: 'Priority', id: 'prio' },
+            { name: 'Priority', id: 'priority' },
             { name: '#', id: 'id' },
-            { name: 'Target Date', id: 'td' }
+            { name: 'Target Date', id: 'target_date' }
         ];
         this.sort = ko.observable(query.sort ? this.sortOptions.find(a => a.id == query.sort) : this.sortOptions[0]);
 
@@ -70,7 +70,17 @@ class ClientBoardViewModel {
             (this.searchCriteria.area ? "&area=" + this.searchCriteria.area.id : '') +
             (this.searchCriteria.archived ? "&archived=1" : ''));
 
-        this.model.listFeatureRequests({ clientId: this.client().id, limit: this.itemsPerPage, offset: this.itemsPerPage * (this.currentPage() - 1) }).then(
+        let params = Object.assign({
+                clientId: this.client().id,
+                limit: this.itemsPerPage,
+                offset: this.itemsPerPage * (this.currentPage() - 1)
+            },
+            this.searchCriteria);
+        params.sort = params.sort.id;
+        if (params.area) {
+            params.area = params.area.id;
+        }
+        this.model.listFeatureRequests(params).then(
             (result) => {
                 this.featureRequests(result.items);
                 this.pages(Math.ceil(result.totalItems / this.itemsPerPage));

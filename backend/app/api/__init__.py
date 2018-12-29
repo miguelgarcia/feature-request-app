@@ -7,17 +7,20 @@ from .schemas import (AreaSchema, ClientSchema, ClientSummarySchema,
                       FeatureRequestSchema, FeatureRequestCreateUpdateSchema,
                       FeatureRequestListArgsSchema)
 from .basecrudview import CrudView
+from app.apitoken import api_token
 
 blueprint = Blueprint('api', 'api')
 
 @blueprint.route('/clients')
 @login_required
+@api_token
 def clients():
     clients = Client.query.all()
     return ClientSummarySchema(many=True).jsonify(clients)
 
 @blueprint.route('/clients/<int:id>')
 @login_required
+@api_token
 def client(id):
     client = Client.query.get(id)
     if client is None:
@@ -26,18 +29,21 @@ def client(id):
 
 @blueprint.route('/areas')
 @login_required
+@api_token
 def areas():
     areas = Area.query.all()
     return AreaSchema(many=True).jsonify(areas)
 
 class FeatureRequestView(CrudView):
+    decorators = [login_required, api_token]
+    
     class Meta:
         model = FeatureRequest
         get_schema = FeatureRequestSchema
         list_schema = FeatureRequestSchema
-        post_schema = FeatureRequestCreateUpdateSchema
         list_args_schema = FeatureRequestListArgsSchema
         def put_schema(): return FeatureRequestCreateUpdateSchema(exclude=('client',))
+        def post_schema(): return FeatureRequestCreateUpdateSchema(exclude=('is_archived',))
 
     def list_query(self, session, args):
         q = FeatureRequest.query
@@ -47,6 +53,8 @@ class FeatureRequestView(CrudView):
             q = q.filter(FeatureRequest.area == args['area'])
         if args.get('search', '') != '':
             q = q.filter(FeatureRequest.title.ilike('%{:s}%'.format(args['search'])))
+        if not args.get('include_archived', False):
+            q = q.filter(FeatureRequest.is_archived == False)
 
         if args['sort'] == 'id':
             q = q.order_by(FeatureRequest.id)

@@ -16,5 +16,6 @@ ko.applyBindings({
     route: routerInstance.currentRoute,
     router: routerInstance,
     appState: appState,
-    flash: appState.flash
+    flash: appState.flash,
+    pendingAjax: appState.pendingAjax,
 });

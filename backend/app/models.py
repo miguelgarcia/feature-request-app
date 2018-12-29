@@ -158,7 +158,7 @@ class FeatureRequest(db.Model):
                     FeatureRequest.increment_priority(self.client, old_priority)
             
             hist = state.get_history(state.attrs.priority.key, True)
-            if hist.added == () or hist.deleted == ():
+            if hist.added == () or hist.added is None or hist.deleted == () or hist.deleted is None:
                 return # Priority not changed
             # Priority was changed
             old_priority = hist.deleted[0]

@@ -13,29 +13,41 @@ class FeatureRequestEditViewModel {
         this.client = ko.observable();
         this.maxPriority = ko.observable(1);
         this.model.getFeatureRequest(featureRequestId).then(fr => {
-            fr.archived = true;
             this.featureRequest(fr);
             this.client(fr.client);
-            this.maxPriority(this.client().activeFeatureRequests + (this.featureRequest().archived ? 1 : 0), this);
+            this.maxPriority(this.client().active_feature_requests + (this.featureRequest().is_archived ? 1 : 0), this);
         });
         this.handleSave = this.handleSave.bind(this);
         this.handleArchive = this.handleArchive.bind(this);
         this.handleUnarchive = this.handleUnarchive.bind(this);
-        this.showArchive = ko.pureComputed(() => !this.featureRequest().archived, this);
+        this.showArchive = ko.pureComputed(() => !this.featureRequest().is_archived, this);
     }
 
     handleArchive() {
-        this.featureRequest(Object.assign(this.featureRequest(), { archived: true }));
+        this.handleSave({ is_archived: true }, false);
     }
 
     handleUnarchive() {
-        this.featureRequest(Object.assign(this.featureRequest(), { archived: false }));
+        this.handleSave({ is_archived: false }, false);
     }
 
-    handleSave(data) {
+    handleSave(data, goBack) {
         data = Object.assign(this.featureRequest(), data);
         this.featureRequest(data);
-        this.model.updateFeatureRequest(data).then(() => this.appState.setFlash("Saved ..."));
+        let params = {
+            title: data.title,
+            description: data.description,
+            area: data.area.id,
+            target_date: data.target_date,
+            priority: data.priority,
+            is_archived: data.is_archived
+        };
+        this.model.updateFeatureRequest(this.featureRequest().id, params).then(() => {
+            this.appState.setFlash(`Saved #${this.featureRequest().id}`);
+            if (goBack !== false) {
+                this.router.goRoute('client-board', { clientId: this.featureRequest().client.id });
+            }
+        });
     }
 }
 

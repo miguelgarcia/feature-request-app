@@ -42,11 +42,9 @@ class Router {
             hasher.setHash("404");
         }
         let url = route.url;
-        console.log(params);
         url = url.replace(/{[^}]*}/g, (s) => s.substr(1, s.length - 2) in params ? params[s.substr(1, s.length - 2)] : "");
         url = url.replace(/:[^:]*:/g, (s) => s.substr(1, s.length - 2) in params ? params[s.substr(1, s.length - 2)] : "");
         url = url.replace(/\/\/+/g, "/");
-        console.log(url);
         hasher.setHash(url);
     }
 }

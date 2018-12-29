@@ -45,9 +45,9 @@ class FeatureRequestFormViewModel {
             }
         });
 
-        this.targetDate = ko.observable(this.featureRequest ? this.featureRequest.targetDate : "");
+        this.target_date = ko.observable(this.featureRequest ? this.featureRequest.target_date : "");
         this.targetDateError = ko.pureComputed(() => {
-            return this.targetDate() == "" ? "This value is required" : "";
+            return this.target_date() == "" ? "This value is required" : "";
         }, this);
 
         this.priority = ko.observable(this.featureRequest ? this.featureRequest.priority : 1);
@@ -66,7 +66,7 @@ class FeatureRequestFormViewModel {
             title: this.title(),
             description: this.description(),
             area: this.area(),
-            targetDate: this.targetDate(),
+            target_date: this.target_date(),
             priority: this.priority()
         });
     }

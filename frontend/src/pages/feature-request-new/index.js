@@ -11,13 +11,15 @@ class FeatureRequestNewViewModel {
         this.model = params.appState.model;
         this.model.getClient(clientId).then(this.client);
         this.handleSave = this.handleSave.bind(this);
-        this.maxPriority = ko.pureComputed(() => this.client().activeFeatureRequests + 1, this)
+        this.maxPriority = ko.pureComputed(() => this.client().active_feature_requests + 1, this)
     }
 
     handleSave(data) {
-        data = Object.assign(data, { client: this.client() });
-        this.model.createFeatureRequest(data).then(() =>
-            this.router.goRoute('client-board', { clientId: this.client().id }));
+        data = Object.assign(data, { client: this.client().id, area: data.area.id });
+        this.model.createFeatureRequest(data).then((id) => {
+            this.appState.setFlash(`Saved #${id}`)
+            this.router.goRoute('client-board', { clientId: this.client().id })
+        });
     }
 }
 

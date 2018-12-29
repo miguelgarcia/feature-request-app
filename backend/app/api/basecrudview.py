@@ -3,7 +3,6 @@ from flask import jsonify, request
 from sqlalchemy.exc import IntegrityError
 from app import db
 
-
 class CrudView(MethodView):
     class Meta:
         model = None
@@ -44,7 +43,7 @@ class CrudView(MethodView):
         except IntegrityError as e:
             db.session.rollback()
             return jsonify({'status': 400, 'message': 'Integrity error'}), 400
-        except Exception:
+        except Exception as e:
             db.session.rollback()
             return jsonify({'status': 400, 'message': 'DB write error'}), 400
 

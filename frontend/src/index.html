@@ -16,6 +16,15 @@
         top: 1px;
         z-index: 999;
         text-align: center"></div>
+
+    <div data-bind="visible: pendingAjax()>0" class="alert alert-warning" style="width: 40%;
+        position: fixed;
+        left: 50%;
+        margin-left: -20%; 
+        top: 1px;
+        z-index: 990;
+        text-align: center">Loading</div>
+
     <div id="page" data-bind="component: { 
         name: currentPage(),
         params: {
