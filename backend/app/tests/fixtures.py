@@ -2,9 +2,25 @@ import pytest
 from app import create_app, db, models
 import factory
 from .factoryboyfixture import make_fixture
+from flask.testing import FlaskClient
+
+from werkzeug.datastructures import Headers
+
+class TestClient(FlaskClient):
+    def open(self, *args, **kwargs):
+        if 'localhost.local' in self.cookie_jar._cookies and '/' in self.cookie_jar._cookies['localhost.local'] and 'x-api-token' in self.cookie_jar._cookies['localhost.local']['/']:
+            api_key_headers = Headers({
+                'x-api-token': self.cookie_jar._cookies['localhost.local']['/']['x-api-token'].value
+            })
+            headers = kwargs.pop('headers', Headers())
+            headers.extend(api_key_headers)
+            kwargs['headers'] = headers
+        return super().open(*args, **kwargs)
+
 
 @pytest.fixture
 def client(app):
+    app.test_client_class = TestClient
     return app.test_client()
 
 @pytest.fixture(scope='session')
@@ -28,8 +44,8 @@ def _db(app):
 def login(client, user_factory):
     def logmein():
         user = user_factory.create()
-        client.post('/auth/login', data=dict(email=user.email, 
-            password='12345678'), follow_redirects=True)
+        resp = client.post('/auth/login', data=dict(email=user.email, 
+            password='12345678'), follow_redirects=False)
         return user
     return logmein
 

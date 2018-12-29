@@ -20,7 +20,7 @@ def test_client_get(client, login, feature_request_factory):
     """ Retrieve a client """
     login()
     fr = feature_request_factory.create()
-    rv = client.get('/api/client/{:d}'.format(fr.client.id))
+    rv = client.get('/api/clients/{:d}'.format(fr.client.id))
     data = json.loads(rv.data)
     expected = model_to_dict(fr.client, ['id', 'name'])
     expected['active_feature_requests'] = 1
@@ -45,10 +45,12 @@ def test_feature_request_get(client, login, feature_request_factory):
         ('area', ['id', 'name']), 'target_date', 'last_update', 'is_archived',
         ('client', ['id', 'name'])
         ])
+    expected['client']['active_feature_requests'] = 1
     assert expected == data
 
-def test_feature_request_post(client, client_factory, area_factory):
+def test_feature_request_post(client, login, client_factory, area_factory):
     """ Create a new order """
+    login()
     c = client_factory.create()
     area = area_factory.create()
     req = {
@@ -57,7 +59,6 @@ def test_feature_request_post(client, client_factory, area_factory):
         'title': 'A nice title',
         'description': 'bla bla bla',
         'priority': 1,
-        'is_archived': False,
         'target_date': datetime.now().strftime("%Y-%m-%d")
     }
     rv = client.post('/api/feature_requests', data=json.dumps(req),
@@ -66,10 +67,12 @@ def test_feature_request_post(client, client_factory, area_factory):
     created_id = int(rv.data)
     fr = models.FeatureRequest.query.get(created_id)
     assert fr is not None
-    expect = req
-    expect['id'] = created_id
-    expect['client'] = {'id': c.id}
-    expect['area'] = {'id': area.id}
+    expect = {**req, **{
+        'id': created_id,
+        'client': {'id': c.id},
+        'area': {'id': area.id},
+        'is_archived': False,
+    }}
     actual = model_to_dict(fr, ['id', 'title', 'priority', 'description',
         ('area', ['id']), 'target_date', 'is_archived',
         ('client', ['id'])
@@ -80,6 +83,7 @@ def test_feature_request_post(client, client_factory, area_factory):
 
 def test_feature_request_update(client, login, client_factory, feature_request_factory, area_factory):
     """ Update a feature request """
+    login()
     c = client_factory.create()
     frs = feature_request_factory.create_batch(3, client=c)
     new_area = area_factory.create()
@@ -122,4 +126,8 @@ def test_feature_requests_list(client, login, client_factory, area_factory,
         ('area', ['id', 'name']), 'target_date', 'is_archived', 'last_update',
         ('client', ['id', 'name'])
         ])
+    def insert_active_feature_requests(v):
+        v['client']['active_feature_requests']=40
+        return v
+    expected = list(map(insert_active_feature_requests, expected))
     assert expected == data
