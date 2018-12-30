@@ -7,3 +7,4 @@ venv
 *.sqlite3
 pgdata
 pgdata_test
+feature_request_app.egg-info
