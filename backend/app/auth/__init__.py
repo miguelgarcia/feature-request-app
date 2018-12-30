@@ -21,7 +21,8 @@ def is_safe_url(target):
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
-    if form.validate():
+    
+    if request.method == 'POST' and form.validate():
         user = User.query.filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)

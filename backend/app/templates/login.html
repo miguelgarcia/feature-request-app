@@ -1,12 +1,20 @@
 {% extends "layout.html" %}
 {% from "_formhelpers.html" import render_field %}
 {% block content %}
+<h2>Feature Request App: Login</h2>
+<div class="alert alert-info">
+Login to access the feature request app.
+</div>
+<div class="card p-2">
+  <form method="post">
+      <div class="form-group">
+      {{ render_field(form.email, class="form-control") }}
+      </div>
+        <div class="form-group">
+      {{ render_field(form.password, class="form-control") }}
+      </div>
 
-<form method=post>
-  <dl>
-    {{ render_field(form.email) }}
-    {{ render_field(form.password) }}
-  </dl>
-  <p><input type=submit value="Login">
-</form>
+    <input type="submit" value="Login" class="btn btn-primary" />
+  </form>
+</div>
 {% endblock %}
