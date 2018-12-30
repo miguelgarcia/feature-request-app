@@ -20,7 +20,16 @@ class FeatureRequestEditViewModel {
         this.handleSave = this.handleSave.bind(this);
         this.handleArchive = this.handleArchive.bind(this);
         this.handleUnarchive = this.handleUnarchive.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.showArchive = ko.pureComputed(() => !this.featureRequest().is_archived, this);
+        this.showDelete = ko.pureComputed(() => this.featureRequest().is_archived, this);
+    }
+
+    handleDelete() {
+        this.model.deleteFeatureRequest(this.featureRequest().id).then(() => {
+            this.appState.setFlash(`Deleted #${this.featureRequest().id}`);
+            this.router.goRoute('client-board', { clientId: this.featureRequest().client.id });
+        });
     }
 
     handleArchive() {

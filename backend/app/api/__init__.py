@@ -74,6 +74,14 @@ class FeatureRequestView(CrudView):
         
         return q
 
+    def delete(self, id):
+        o = self._meta.model.query.get(id)
+        if o is None:
+            return jsonify({'status': 404, 'message': 'Not found'}), 404
+        if not o.is_archived:
+            return jsonify({'status': 400, 'message': 'Feature request is not archived'}), 400
+        return super().delete(id)
+
 
 def register_crud_view(view_class, plural, list_methods=['GET', 'POST'],
                        record_methods=['GET', 'PUT', 'DELETE']):

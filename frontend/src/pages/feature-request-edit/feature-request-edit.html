@@ -4,6 +4,10 @@
     <div class="card">
         <div class="card-body">
             <feature-request-form params="maxPriority: maxPriority, featureRequest: featureRequest(), appState: appState, onSubmit: handleSave, onArchive: handleArchive, onUnarchive: handleUnarchive, showArchive: showArchive(), showUnarchive: !showArchive()"></feature-request-form>
+            <div class="mt-2">
+                <button data-bind="click: handleDelete, visible: showDelete" class="btn btn-danger btn-lg">Delete forever</button>
+            </div>
         </div>
+        
     </div>
 </div>

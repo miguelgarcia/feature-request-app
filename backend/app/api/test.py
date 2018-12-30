@@ -131,3 +131,19 @@ def test_feature_requests_list(client, login, client_factory, area_factory,
         return v
     expected = list(map(insert_active_feature_requests, expected))
     assert expected == data
+
+def test_feature_request_delete(client, login, feature_request_factory):
+    login()
+    fr = feature_request_factory.create(is_archived=True)
+    id = fr.id
+    rv = client.delete('/api/feature_requests/{:d}'.format(id))
+    assert rv.status_code == 204
+    assert models.FeatureRequest.query.get(id) is None
+
+def test_feature_request_delete_not_archived(client, login, feature_request_factory):
+    login()
+    fr = feature_request_factory.create()
+    id = fr.id
+    rv = client.delete('/api/feature_requests/{:d}'.format(id))
+    assert rv.status_code == 400
+    assert models.FeatureRequest.query.get(id) is not None

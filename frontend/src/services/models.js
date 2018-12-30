@@ -65,5 +65,11 @@ class Manager {
             data: JSON.stringify(fr)
         });
     }
+
+    deleteFeatureRequest(id) {
+        return this.ajax.fetch('/api/feature_requests/' + id, {
+            method: "DELETE"
+        });
+    }
 }
 export default Manager;
