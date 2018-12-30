@@ -3,13 +3,17 @@ from flask_login import current_user
 import hashlib
 import random
 
+def validate_token(request, session):
+    if 'x-api-token' not in request.headers:
+        raise Exception('No token provided')
+    if request.headers['x-api-token'] != session['x-api-token']:
+        raise Exception('Invalid token provided')
+
+    
 def api_token(f):
     """ Checks a valid api token header is set in the request """
     def wrapper(*args, **kw):
-        if 'x-api-token' not in request.headers:
-            raise Exception('No token provided')
-        if request.headers['x-api-token'] != session['x-api-token']:
-            raise Exception('Invalid token provided')
+        validate_token(request, session)
         return f(*args, **kw)
     wrapper.__name__ = f.__name__
     return wrapper

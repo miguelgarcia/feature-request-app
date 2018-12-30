@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask_login import login_required
+from flask import Blueprint, request, session, jsonify
+from flask_login import current_user
 
 from app.models import Area, Client, FeatureRequest
 
@@ -7,20 +7,33 @@ from .schemas import (AreaSchema, ClientSchema, ClientSummarySchema,
                       FeatureRequestSchema, FeatureRequestCreateUpdateSchema,
                       FeatureRequestListArgsSchema)
 from .basecrudview import CrudView
-from app.apitoken import api_token
+from app.apitoken import validate_token
 
 blueprint = Blueprint('api', 'api')
 
+class AuthException(Exception):
+    pass
+
+@blueprint.before_request
+def before_request():
+    if not current_user.is_authenticated:
+        raise AuthException()
+    try:
+        validate_token(request, session)
+    except Exception:
+        raise AuthException()
+
+@blueprint.errorhandler(AuthException)
+def on_auth_error(e):
+    return jsonify({'error':'Invalid credentials'}), 401
+
+
 @blueprint.route('/clients')
-@login_required
-@api_token
 def clients():
     clients = Client.query.all()
     return ClientSummarySchema(many=True).jsonify(clients)
 
 @blueprint.route('/clients/<int:id>')
-@login_required
-@api_token
 def client(id):
     client = Client.query.get(id)
     if client is None:
@@ -28,15 +41,11 @@ def client(id):
     return ClientSchema().jsonify(client)
 
 @blueprint.route('/areas')
-@login_required
-@api_token
 def areas():
     areas = Area.query.all()
     return AreaSchema(many=True).jsonify(areas)
 
 class FeatureRequestView(CrudView):
-    decorators = [login_required, api_token]
-    
     class Meta:
         model = FeatureRequest
         get_schema = FeatureRequestSchema
