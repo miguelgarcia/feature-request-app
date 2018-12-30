@@ -1,0 +1,20 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: fra
+      POSTGRES_USER: fra
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/pgdata
+  app:
+    image: fra
+    environment:
+      SECRET_KEY: my_secret
+      DATABASE_URI: postgresql+psycopg2://fra:fra@db/fra
+      APP_SETTINGS: app.config.ProductionConfig
+    ports:
+      - "5000:80"
+    depends_on:
+      - "db"
