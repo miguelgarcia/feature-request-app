@@ -5,6 +5,8 @@ built using flask.
 
 The application allows the user to manage feature requests made by clients.
 
+See online demo here: [Visit](https://mike-feature-request-app.herokuapp.com/)
+
 Default user is: `admin@example.com`, password: `fraAdmin2019`
 
 See more info for the frontend and backend in the `README.md` file of each directory.
