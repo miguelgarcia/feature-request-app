@@ -11,7 +11,7 @@ USE_NGINX_WORKER_PROCESSES=${NGINX_WORKER_PROCESSES:-1}
 sed -i "/worker_processes\s/c\worker_processes ${USE_NGINX_WORKER_PROCESSES};" /etc/nginx/nginx.conf
 
 # Get the listen port for Nginx, default to 80
-USE_LISTEN_PORT=${LISTEN_PORT:-80}
+USE_LISTEN_PORT=${PORT:-80}
 
 # Explicitly add installed Python packages and uWSGI Python packages to PYTHONPATH
 # Otherwise uWSGI can't import Flask
